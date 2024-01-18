@@ -1,5 +1,28 @@
 USE clinic_db;
 
+-- Create Trigger: hash password before insert
+DELIMITER //
+CREATE TRIGGER `hash_password_patient` BEFORE INSERT ON `patient` FOR EACH ROW
+BEGIN
+    SET NEW.password = SHA2(NEW.password,0);
+END;
+//
+CREATE TRIGGER `hash_password_doctor` BEFORE INSERT ON `doctor` FOR EACH ROW
+BEGIN
+    SET NEW.password = SHA2(NEW.password,0);
+END;
+//
+CREATE TRIGGER `hash_password_secretary` BEFORE INSERT ON `secretary` FOR EACH ROW
+BEGIN
+    SET NEW.password = SHA2(NEW.password,0);
+END;
+//
+CREATE TRIGGER `hash_password_admin` BEFORE INSERT ON `admin` FOR EACH ROW
+BEGIN
+    SET NEW.password = SHA2(NEW.password,0);
+END;
+// DELIMITER ;
+
 -- Create Trigger: new_document for new_appointment
 DELIMITER //
 CREATE TRIGGER `new_document` AFTER INSERT ON `appointment` FOR EACH ROW

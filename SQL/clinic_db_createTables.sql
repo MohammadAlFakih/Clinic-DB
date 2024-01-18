@@ -27,6 +27,20 @@ CREATE TABLE IF NOT EXISTS `specialization` (
     PRIMARY KEY (`id`)
 );
 
+-- Create Table: admin
+CREATE TABLE IF NOT EXISTS `admin` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `email` VARCHAR(30) NOT NULL,
+    `password` TEXT NOT NULL,
+    `name` VARCHAR(30) NOT NULL,
+    `age` INT NOT NULL,
+    `gender` CHAR(1) NOT NULL,
+    `phone` VARCHAR(30) NOT NULL,
+    `role` VARCHAR(30) NOT NULL DEFAULT 'admin',
+    PRIMARY KEY (`id`),
+    UNIQUE (`email`)
+);
+
 -- Create Table: doctor
 CREATE TABLE IF NOT EXISTS `doctor` (
     `id` INT NOT NULL AUTO_INCREMENT,

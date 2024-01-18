@@ -1,13 +1,13 @@
 USE clinic_db;
 
 -- Indexes on Primary Keys
+CREATE INDEX idx_admin_id ON admin (id);
 CREATE INDEX idx_department_id ON department (id);
 CREATE INDEX idx_city_id ON city (id);
 CREATE INDEX idx_specialization_id ON specialization (id);
 CREATE INDEX idx_doctor_id ON doctor (id);
 CREATE INDEX idx_secretary_id ON secretary (id);
 CREATE INDEX idx_patient_id ON patient (id);
-CREATE INDEX idx_city_id ON city (id);
 CREATE INDEX idx_appointment_id ON appointment (id);
 CREATE INDEX idx_document_id ON document (id);
 
