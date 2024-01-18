@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<BorderPane prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.includes.index_viewController">
+   <center>
+      <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab fx:id="login_tb" text="Log In">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="login_email_tf" layoutX="156.0" layoutY="130.0" />
+                        <TextField fx:id="login_password_tf" layoutX="156.0" layoutY="187.0" />
+                        <Button layoutX="205.0" layoutY="235.0" mnemonicParsing="false" onAction="#login" text="Log In" />
+                        <Label layoutX="212.0" layoutY="101.0" prefHeight="17.0" prefWidth="55.0" text="Email" />
+                        <Label layoutX="203.0" layoutY="163.0" prefHeight="17.0" prefWidth="55.0" text="Password" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="signup_tb" text="Sign Up">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <GridPane layoutX="28.0" layoutY="48.0" prefHeight="256.0" prefWidth="443.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <TextField fx:id="name_tf" style="-fx-background-radius: 10;" GridPane.columnIndex="1" />
+                              <TextField fx:id="email_tf" style="-fx-background-radius: 10;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="password_tf" style="-fx-background-radius: 10;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="age_tf" onKeyTyped="#age_handler" style="-fx-background-radius: 10;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <TextField fx:id="phone_tf" onKeyTyped="#phone_handler" style="-fx-background-radius: 10;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <Label text="Phone" GridPane.rowIndex="5" />
+                              <Label text="Email" GridPane.rowIndex="1" />
+                              <Label text="Password" GridPane.rowIndex="2" />
+                              <Label text="Gender" GridPane.rowIndex="3" />
+                              <Label text="Age" GridPane.rowIndex="4" />
+                              <Label text="Name" />
+                              <ChoiceBox fx:id="gender_cb" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                           </children>
+                        </GridPane>
+                        <Button layoutX="412.0" layoutY="329.0" mnemonicParsing="false" onAction="#signup" prefHeight="29.0" prefWidth="66.0" text="Sign Up" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+</BorderPane>

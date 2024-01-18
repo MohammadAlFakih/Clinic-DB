@@ -117,9 +117,9 @@ END;
 //
 DELIMITER ;
 
--- Get all busy slots on a specific date
+-- Get all busy slots on a specific date for a specific doctors
 DELIMITER //
-CREATE PROCEDURE get_unavailable_slots_on_date(
+CREATE PROCEDURE get_unavailable_slots_on_date_procedure(
     IN specific_date DATE,
     IN doctor_id INT
 )
@@ -133,5 +133,26 @@ BEGIN
         busy_schedule_view
     WHERE
         DATE(start_date) = specific_date;
+END;
+// DELIMITER ;
+
+-- Accept appointment and delete overlapped ones
+DELIMITER //
+CREATE PROCEDURE accept_appointment_procedure(
+    IN p_appointment_id INT,
+    IN p_start_date DATETIME,
+    IN p_end_date DATETIME
+)
+BEGIN
+    UPDATE appointment SET status = 'upcoming'
+    WHERE id = p_appointment_id;
+    DELETE FROM appointment
+    WHERE doctor_id = p_doctor_id
+        AND DATE(start_date) = DATE(p_start_date)
+        AND (
+          (start_date <= p_start_date AND end_date >= p_start_date) OR
+          (start_date <= p_end_date AND end_date >= p_end_date) OR
+          (start_date >= p_start_date AND end_date <= p_end_date)
+        );
 END;
 // DELIMITER ;
