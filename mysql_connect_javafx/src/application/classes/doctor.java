@@ -18,13 +18,21 @@ public class doctor extends user{
 	private String city;
 	
 	public doctor(String name,String email,String password,
-			String phone,int age,String gender,int department_id,String address,int specialization_id,
-			String specialization,String city){
+		String phone,int age,String gender,int department_id,String address,int specialization_id,
+		String specialization,String city){
 		super(name, email, password,
 				 phone, age, gender, "doctor");
 		this.specialization = new AbstractMap.SimpleEntry<>(specialization_id,specialization);
 		this.city = city;
 		this.department = new AbstractMap.SimpleEntry<>(department_id,address);
+	}
+	
+	public int getID() {
+		return id;
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 	public doctor(int id,String name,int dep_id,String address,String phone) {
@@ -49,7 +57,7 @@ public class doctor extends user{
 		DBConnection db;
 		db = DBConnection.getInstance();
 		Connection dbc = db.getConnection();
-		ObservableList<doctor> available_doctors =  FXCollections.observableArrayList();;
+		ObservableList<doctor> available_doctors =  FXCollections.observableArrayList();
 		try {
 			String query = "SELECT * FROM available_doctors_view"
 					+ " WHERE specialization=? AND city_name=?";

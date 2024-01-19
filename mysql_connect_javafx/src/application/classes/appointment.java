@@ -34,6 +34,14 @@ public class appointment {
 		this.patient_name=patient_name;
 	}
 	
+	public appointment(int doctor_id,int patient_id,String start_date,
+	 String end_date) {
+		this.doctor_id=doctor_id;
+		this.patient_id=patient_id;
+		this.start_date=start_date;
+		this.end_date=end_date;
+	}
+	
 	 public String get_status() {
 		 return status;
 	 }
@@ -135,5 +143,26 @@ public class appointment {
 		 else
 			 text+=" / Status : Pending";
 		 return text;
+	 }
+	 
+	 public void insert_appointment() {
+		 DBConnection db;
+			db = DBConnection.getInstance();
+			Connection dbc = db.getConnection();
+			try {
+				String query = "INSERT INTO appointment (patient_id,doctor_id,start_date,end_date)"
+						+ " VALUES (?,?,?,?)";
+				PreparedStatement stmt = dbc.prepareStatement(query);
+		        stmt.setInt(1, patient_id);
+		        stmt.setInt(2, doctor_id);
+		        stmt.setString(3, start_date);
+		        stmt.setString(4, end_date);
+		        stmt.executeUpdate();
+		        stmt.close();
+			}
+			catch (SQLException e) {
+		        e.printStackTrace();
+		        // Handle the exception (e.g., log it, throw a custom exception, etc.)	    
+			}
 	 }
 }
