@@ -106,16 +106,14 @@ CREATE TABLE IF NOT EXISTS `appointment` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `doctor_id` INT NOT NULL,
     `patient_id` INT NOT NULL,
-    `department_id` INT NOT NULL,
     `start_date` DATETIME NOT NULL,
     `end_date` DATETIME NOT NULL,
-    `bill` FLOAT NOT NULL DEFAULT 0 CHECK(`bill` > 0),
+    `bill` FLOAT NOT NULL DEFAULT 0 CHECK(`bill` >= 0),
     `status` VARCHAR(30) NOT NULL DEFAULT 'pending',
     `book_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`doctor_id`) REFERENCES `doctor`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-    FOREIGN KEY (`patient_id`) REFERENCES `patient`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-    FOREIGN KEY (`department_id`) REFERENCES `department`(`id`) ON DELETE RESTRICT ON UPDATE NO ACTION
+    FOREIGN KEY (`patient_id`) REFERENCES `patient`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- Create Table: document
