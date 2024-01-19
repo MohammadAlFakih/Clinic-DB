@@ -3,3 +3,5 @@
 /available_doctorsController$appListCell.class
 /available_doctorsController$doctorListCell.class
 /main_patient_viewController$appListCell.class
+/book_appointment_viewController.class
+/book_appointment_viewController$slotListCell.class
