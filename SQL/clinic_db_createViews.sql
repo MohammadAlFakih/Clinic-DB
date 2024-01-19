@@ -8,6 +8,7 @@ SELECT
     d.age,
     d.gender,
     d.phone,
+    d.department_id,
     s.alias AS specialization,
     dep.address,dep.room,
     c.alias AS city_name
@@ -18,12 +19,12 @@ JOIN
 JOIN
     department dep ON d.department_id = dep.id
 JOIN 
-    city c ON c.id = department.city_id;
+    city c ON c.id = dep.city_id;
 
 -- View for appointments
 CREATE VIEW appointments_view AS
 SELECT
-    a.id AS appointment_id,
+    a.id AS id,
     d.id AS doctor_id,
     d.name AS doctor_name,
     p.id AS patient_id,
@@ -31,6 +32,7 @@ SELECT
     a.start_date,
     a.end_date,
     a.status,
+    a.bill,
     dep.address,
     city.alias,
     doc.details,
@@ -42,10 +44,10 @@ JOIN
 JOIN
     patient p ON a.patient_id = p.id
 JOIN 
-    department dep ON a.department_id = dep.id
+    department dep ON d.department_id = dep.id
 JOIN 
     city ON dep.city_id = city.id
-JOIN document ON a.id = document.appointment_id
+JOIN document doc ON a.id = doc.appointment_id;
 
 
 

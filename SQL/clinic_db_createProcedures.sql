@@ -136,23 +136,48 @@ BEGIN
 END;
 // DELIMITER ;
 
--- Accept appointment and delete overlapped ones
+-- Accept appointment and make overlapped ones queued
 DELIMITER //
 CREATE PROCEDURE accept_appointment_procedure(
     IN p_appointment_id INT,
     IN p_start_date DATETIME,
-    IN p_end_date DATETIME
+    IN p_end_date DATETIME,
+    IN p_doctor_id INT
 )
 BEGIN
     UPDATE appointment SET status = 'upcoming'
     WHERE id = p_appointment_id;
-    DELETE FROM appointment
+    UPDATE appointment SET status = 'queued'
     WHERE doctor_id = p_doctor_id
+        AND id != p_appointment_id
         AND DATE(start_date) = DATE(p_start_date)
         AND (
           (start_date <= p_start_date AND end_date >= p_start_date) OR
           (start_date <= p_end_date AND end_date >= p_end_date) OR
           (start_date >= p_start_date AND end_date <= p_end_date)
         );
+END;
+// DELIMITER ;
+
+-- Remove appointment and make overlapped ones pending
+DELIMITER //
+CREATE PROCEDURE delete_upcoming_appointment_procedure(
+    IN p_appointment_id INT,
+    IN p_start_date DATETIME,
+    IN p_end_date DATETIME,
+    IN p_doctor_id INT
+)
+BEGIN
+    UPDATE appointment SET status = 'pending'
+    WHERE doctor_id = p_doctor_id
+        AND id != p_appointment_id
+        AND DATE(start_date) = DATE(p_start_date)
+        AND (
+          (start_date <= p_start_date AND end_date >= p_start_date) OR
+          (start_date <= p_end_date AND end_date >= p_end_date) OR
+          (start_date >= p_start_date AND end_date <= p_end_date)
+        );
+    DELETE FROM appointment
+    WHERE id = p_appointment_id;
 END;
 // DELIMITER ;

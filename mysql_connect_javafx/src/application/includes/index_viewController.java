@@ -1,5 +1,6 @@
 package application.includes;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,16 +10,19 @@ import application.db.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import application.Main;
 import application.classes.*;
-
-
+import application.Main;
+import application.secretary.*;
+import application.patient.*;
 public class index_viewController {
 
 	ObservableList<String> gender_list = FXCollections.observableArrayList("Male","Female");
@@ -65,7 +69,7 @@ public class index_viewController {
     }
 	
 	@FXML
-	private void login() throws SQLException {
+	private void login() throws SQLException, IOException {
 		String email = login_email_tf.getText();
 		String password = login_password_tf.getText().trim();
 		password = user.hashPassword(password);
@@ -100,12 +104,40 @@ public class index_viewController {
 		}
 		else {
 			String role = result.getString("role");
+			role = role.trim();
 			int id = result.getInt("id");
-			Alert alert = new Alert(Alert.AlertType.INFORMATION);
-	        alert.setTitle("Information");
-	        alert.setHeaderText(null);
-	        alert.setContentText("Welcome bro");
-	        alert.showAndWait();
+			int doctor_id = -1;
+			
+			//Secretary
+			if(role.equals("secretary")) {
+				query = "Select doctor_id FROM secretary WHERE id=?";
+				stmt = dbc.prepareStatement(query);
+				stmt.setInt(1,id);
+				result = stmt.executeQuery();
+				while(result.next()) {
+					doctor_id = result.getInt("doctor_id");
+				}
+				requests_viewController.doctor_id = doctor_id;
+				//Open secretary window
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(Main.class.getResource("secretary/requests_view.fxml"));
+				Main.mainLayout = loader.load();
+				Scene scene = new Scene(Main.mainLayout);
+				Main.primaryStage.setScene(scene);
+				Main.primaryStage.show();
+			}
+			
+			//Patient
+			if(role.equals("patient")) {
+				main_patient_viewController.patient_id = id;
+				//Open patient window
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(Main.class.getResource("patient/main_patient_view.fxml"));
+				Main.mainLayout = loader.load();
+				Scene scene = new Scene(Main.mainLayout);
+				Main.primaryStage.setScene(scene);
+				Main.primaryStage.show();
+			}
 		}
 	}
 	
