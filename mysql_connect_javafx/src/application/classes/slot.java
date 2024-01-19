@@ -66,7 +66,7 @@ public class slot {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				LocalDateTime dateTime1 = LocalDateTime.parse(end, formatter);
 		        LocalDateTime dateTime2 = LocalDateTime.parse(busy_slots.get(i+1).get_start_date(), formatter);
-		        while(i<busy_slots.size() && !dateTime1.isAfter(dateTime2)) {
+		        while(i<busy_slots.size() && !dateTime1.isBefore(dateTime2)) {
 		        	i++;
 		        	end = busy_slots.get(i).get_end_date();
 		        	if(i==busy_slots.size()-1)
@@ -76,7 +76,12 @@ public class slot {
 		        }
 			}
 			slot temp = new slot(start,end);
+			if(temp.get_start_date().equals(temp.get_end_date()))
+				continue;
 			merged_slots.add(temp);
+		}
+		for(slot s:merged_slots) {
+			System.out.println(s.get_start_date()+"->"+s.get_end_date());
 		}
 		
 		//Now construct the available slots
@@ -87,13 +92,15 @@ public class slot {
 			LocalDateTime start_datetime = LocalDateTime.parse(s.get_start_date(), formatter);
 			LocalTime start_time = start_datetime.toLocalTime();
 			slot temp = new slot(start,start_time.toString());
-			free_slots.add(temp);
+			if(!temp.get_start_date().equals(temp.get_end_date()))
+				free_slots.add(temp);
 			LocalDateTime end_datetime = LocalDateTime.parse(s.get_end_date(), formatter);
 			LocalTime end_time = end_datetime.toLocalTime();
 			start = end_time.toString();
 		}
 		slot temp = new slot(start,end);
-		free_slots.add(temp);
+		if(!temp.get_start_date().equals(temp.get_end_date()))
+			free_slots.add(temp);
 		return free_slots;
 	}
 	

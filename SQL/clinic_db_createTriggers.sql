@@ -21,7 +21,7 @@ CREATE TRIGGER `hash_password_admin` BEFORE INSERT ON `admin` FOR EACH ROW
 BEGIN
     SET NEW.password = SHA2(NEW.password,0);
 END;
-// DELIMITER ;
+// DELIMITER ;;
 
 -- Create Trigger: new_document for new_appointment
 DELIMITER //
@@ -47,7 +47,7 @@ BEGIN
         (NEW.id, 'sunday', '08:00', '08:00');
 END;
 //
-DELIMITER ;
+DELIMITER ;;
 
 -- <-----------------------Appointment intergrity constraints------------------------>
 -- Trigger to check foreign key constraints
@@ -67,7 +67,7 @@ BEGIN
     END IF;
 END;
 //
-DELIMITER //
+DELIMITER ;;
 
 -- <-----------------------Doctor intergrity constraints------------------------>
 -- Trigger to check foreign key constraints
@@ -87,7 +87,7 @@ BEGIN
     END IF;
 END;
 //
-DELIMITER //
+DELIMITER ;;
 
 -- <-----------------------Unavailable_slots intergrity constraints------------------------>
 -- Trigger to check foreign key constraints
@@ -102,7 +102,7 @@ BEGIN
     END IF;
 END;
 //
-DELIMITER //
+DELIMITER ;;
 
 -- <-----------------------Document intergrity constraints------------------------>
 -- Trigger to check foreign key constraints
@@ -117,7 +117,7 @@ BEGIN
     END IF;
 END;
 //
-DELIMITER //
+DELIMITER ;;
 
 -- <-----------------------Department intergrity constraints------------------------>
 -- Trigger to check foreign key constraints
@@ -132,4 +132,4 @@ BEGIN
     END IF;
 END;
 //
-DELIMITER //
+DELIMITER ;;

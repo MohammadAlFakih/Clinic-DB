@@ -70,12 +70,12 @@ public class main_patient_viewController {
             } else {
                 HBox hbox = new HBox();
                 
+                
+                
+                setText(app.display_for_patient());
                 setGraphic(hbox);
-                
-                setText("# "+(appointment_counter)+" "+app.display_for_patient());
-                
                 //If pending allow remove
-                if(app.get_status().equals("pending")) {
+                if(!app.get_status().equals("upcoming")) {
                 	Button removeButton = new Button("Cancel");
                 	removeButton.setOnAction(event -> {
 						try {
